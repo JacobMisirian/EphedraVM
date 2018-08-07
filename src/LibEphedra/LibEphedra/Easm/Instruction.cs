@@ -33,9 +33,9 @@ namespace LibEphedra.Easm
 
         public static Instruction Deserialize(BinaryReader br)
         {
-            byte opcodeAndFirstOperand = br.ReadByte();
-            byte opcode = (byte)(opcodeAndFirstOperand >> 4);
-            UInt16 firstOperand = (UInt16)(opcodeAndFirstOperand & 0x0F);
+            UInt16 opcodeAndFirstOperand = br.ReadUInt16();
+            byte opcode = (byte)(opcodeAndFirstOperand >> 8);
+            UInt16 firstOperand = (UInt16)(opcodeAndFirstOperand & 0xF);
             if (opcode >= 0 && opcode < instructionCodes.Count)
             {
                 Type t = instructionCodes[opcode];
