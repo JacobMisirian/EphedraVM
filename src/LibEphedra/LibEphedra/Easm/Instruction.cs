@@ -33,16 +33,16 @@ namespace LibEphedra.Easm
 
         public static Instruction Deserialize(BinaryReader br)
         {
-            UInt16 opcodeAndFirstOperand = br.ReadUInt16();
-            byte opcode = (byte)(opcodeAndFirstOperand >> 8);
-            UInt16 firstOperand = (UInt16)(opcodeAndFirstOperand & 0xF);
+            UInt16 opcodeAndOperand1 = br.ReadUInt16();
+            byte opcode = (byte)(opcodeAndOperand1 >> 8);
+            UInt16 operand1 = (UInt16)(opcodeAndOperand1 & 0xF);
             if (opcode >= 0 && opcode < instructionCodes.Count)
             {
                 Type t = instructionCodes[opcode];
                 return (Instruction)Activator.CreateInstance(t, new object[]
                 {
                     opcode,
-                    firstOperand,
+                    operand1,
                     br.ReadUInt16(),
                     br.ReadUInt32()
                 });
@@ -53,8 +53,10 @@ namespace LibEphedra.Easm
 
         public static void Serialize(BinaryWriter bw, Instruction i)
         {
-            bw.Write(i.Opcode);
-            bw.Write(i.Operand1);
+            UInt16 opcodeAndOperand1 = i.Operand1;
+            opcodeAndOperand1 <<= 8;
+            opcodeAndOperand1 ^= i.Opcode;
+            bw.Write(opcodeAndOperand1);
             bw.Write(i.Operand2);
             bw.Write(i.Immediate);
 
