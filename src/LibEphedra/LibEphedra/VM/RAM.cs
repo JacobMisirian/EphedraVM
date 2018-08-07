@@ -4,6 +4,8 @@ namespace LibEphedra.VM
 {
     public class RAM
     {
+        public static RAM Instance = new RAM(0xFFFF);
+
         private byte[] data;
 
         public RAM(int size)

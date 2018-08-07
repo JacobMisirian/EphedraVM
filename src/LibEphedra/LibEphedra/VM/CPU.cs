@@ -7,9 +7,12 @@ namespace LibEphedra.VM
 {
     public class CPU
     {
-        private RAM ram;
         private List<Register> registers;
 
+        public Register GetRegister(SpecialRegister identifier)
+        {
+            return GetRegister((UInt16)identifier);
+        }
         public Register GetRegister(UInt16 identifier)
         {
             if (identifier >= 0 && registers.Count < identifier)

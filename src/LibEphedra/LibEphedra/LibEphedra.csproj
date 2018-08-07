@@ -45,7 +45,12 @@
   <ItemGroup>
     <Compile Include="Easm\Instruction.cs" />
     <Compile Include="Easm\Instructions\Jmp.cs" />
+    <Compile Include="Easm\Instructions\Lddw.cs" />
+    <Compile Include="Easm\Instructions\Lddwi.cs" />
+    <Compile Include="Easm\Instructions\Ldw.cs" />
+    <Compile Include="Easm\Instructions\Ldwi.cs" />
     <Compile Include="Easm\Instructions\Mov.cs" />
+    <Compile Include="Easm\Instructions\Stw.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VM\CPU.cs" />
     <Compile Include="VM\RAM.cs" />
