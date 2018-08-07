@@ -1,10 +1,5 @@
 ﻿using LibEphedra.VM;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace LibEphedra.Easm.Instructions
 {
     public class Mov : Instruction
@@ -15,7 +10,10 @@ namespace LibEphedra.Easm.Instructions
 
         public override void Execute(CPU cpu)
         {
+            Register dest = cpu.GetRegister(Operand1);
+            Register src = cpu.GetRegister(Operand2);
 
+            dest.Value = src.Value;
         }
     }
 }
