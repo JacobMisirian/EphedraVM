@@ -13,7 +13,6 @@ CPU::CPU(size_t ram_size, std::ifstream * os) {
    size_t os_size = (size_t)os->tellg();
    os->seekg(0, std::ios::beg);
    os->read(ram, os_size);
-   os->close();
 }
 
 CPU::~CPU() {
