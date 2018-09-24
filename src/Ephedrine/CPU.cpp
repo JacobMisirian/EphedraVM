@@ -16,7 +16,6 @@ CPU::CPU(size_t ram_size, std::ifstream * os) {
    os->close();
 }
 
-
 CPU::~CPU() {
    delete ram;
 }
