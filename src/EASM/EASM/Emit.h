@@ -9,7 +9,10 @@
 class Emit
 {
 private:
+   std::vector<Token*> * tokens;
+   std::map<std::string, int> labels;
    std::ofstream * os;
+
    void serialize_inst(uint8_t opcode, uint8_t operand1, uint8_t operand2, uint16_t immediate) {
       uint32_t i = immediate;
       i ^= ((uint32_t)operand1 << 17);
