@@ -9,6 +9,9 @@ Lexer::Lexer(const char * code, std::vector<Token*> * tokes) {
 
 
 Lexer::~Lexer() {
+    for (int i = 0; i < tokens.size(); i++) {
+       delete token;
+    }
 }
 
 void Lexer::scan() {
