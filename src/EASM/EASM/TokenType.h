@@ -3,9 +3,11 @@
 
 enum TokenType {
    Comma,
-   Identifier,
+   Instruction,
    Integer,
-   Label,
+   LabelDeclaration,
+   LabelRequest,
+   Register,
    String,
 };
 

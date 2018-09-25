@@ -1,7 +1,10 @@
 #ifndef _LEXER_H_
 #define _LEXER_H_
 
+#include "InstructionInfo.h"
 #include <iostream>
+#include <map>
+#include "RegisterInfo.h"
 #include "Token.h"
 #include <vector>
 
@@ -33,10 +36,18 @@ private:
          (*str) += (char)read_char();
       }
 
-      tokens->push_back(new Token(str, Identifier));
+      if (instruction_identifiers.find(*str) != instruction_identifiers.end()) {
+         tokens->push_back(new Token(str, Instruction));
+      }
+      else if (std::find(register_identifiers.begin(), register_identifiers.end(), *str) != register_identifiers.end()) {
+         tokens->push_back(new Token(str, Register));
+      }
+      else {
+         tokens->push_back(new Token(str, LabelRequest));
+      }
    }
 
-   void scan_label() {
+   void scan_label_declaration() {
       read_char(); // .
       std::string * str = new std::string;
 
@@ -44,7 +55,7 @@ private:
          (*str) += (char)read_char();
       }
 
-      tokens->push_back(new Token(str, Label));
+      tokens->push_back(new Token(str, LabelDeclaration));
    }
 
    void scan_num() {

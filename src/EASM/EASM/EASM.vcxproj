@@ -116,7 +116,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Emit.h" />
+    <ClInclude Include="InstructionInfo.h" />
     <ClInclude Include="Lexer.h" />
+    <ClInclude Include="RegisterInfo.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="TokenType.h" />
   </ItemGroup>

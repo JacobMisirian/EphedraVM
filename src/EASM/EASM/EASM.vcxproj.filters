@@ -27,6 +27,12 @@
     <ClInclude Include="Emit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InstructionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisterInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Token.cpp">

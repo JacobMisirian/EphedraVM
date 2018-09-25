@@ -9,8 +9,8 @@ Lexer::Lexer(const char * code, std::vector<Token*> * tokes) {
 
 
 Lexer::~Lexer() {
-    for (int i = 0; i < tokens.size(); i++) {
-       delete token;
+    for (int i = 0; i < tokens->size(); i++) {
+       delete (*tokens)[i];
     }
 }
 
@@ -31,7 +31,7 @@ void Lexer::scan() {
             read_char();
             break;
          case '.':
-            scan_label();
+            scan_label_declaration();
             break;
          default:
             printf("Unknown char %d!", (char)read_char());
