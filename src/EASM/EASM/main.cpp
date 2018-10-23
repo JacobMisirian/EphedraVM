@@ -25,4 +25,7 @@ int main(int argc, char *argv[]) {
    Emit * emit = new Emit(&tokens, &os);
    emit->assemble();
    os.close();
+
+   delete l;
+   delete emit;
 }

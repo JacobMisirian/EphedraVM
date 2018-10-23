@@ -7,4 +7,5 @@ int main(int argc, char *argv[]) {
    CPU * cpu = new CPU(0xFFF, &os);
    cpu->execute();
    os.close();
+   delete cpu;
 }
