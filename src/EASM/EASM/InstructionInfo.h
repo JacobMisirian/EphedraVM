@@ -4,7 +4,7 @@
 #include <set>
 #include <stdint.h>
 
-static const std::set<std::string> instruction_identifiers = { "add", "addi", "hcf", "lb", "lbi", "li", "lw", "lwi", "mov", "pop", "push", "sb", "sbi", "sw", "swi", "sub", "subi" };
+static const std::set<std::string> instruction_identifiers = { "add", "addi", "hcf", "jmp", "lb", "lbi", "li", "lw", "lwi", "mov", "pop", "push", "sb", "sbi", "sw", "swi", "sub", "subi" };
 
 static uint8_t get_instruction_code(std::string * inst) {
    auto it = find(instruction_identifiers.begin(), instruction_identifiers.end(), *inst);

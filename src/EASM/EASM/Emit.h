@@ -18,7 +18,7 @@ private:
    std::ofstream * os;
 
    void serialize_inst(uint8_t opcode, uint8_t operand1, uint8_t operand2, uint16_t immediate) {
-      printf("Serializing %d\t%d\t%d\t%d\n", opcode, operand1, operand2, immediate);
+      printf("Serializing %d\t%d\t%d\t%d\t\t%d\n", opcode, operand1, operand2, immediate, (uint16_t)os->tellp());
       uint32_t i = immediate;
       i ^= ((uint32_t)operand1 << 16);
       i ^= ((uint32_t)operand2 << 22);
@@ -28,25 +28,26 @@ private:
    }
 
    uint16_t seek_label(int tok_index, std::string * target) {
-      if (label_positions.find(*target) != label_positions.end()) {
-         return label_positions[*target];
-      }
-
       uint16_t offset = 4;
+
       for (; tok_index < tokens->size(); tok_index++) {
+         if (label_positions.find(*target) != label_positions.end())
+            return label_positions[*target];
+
          TokenType token_type = (*tokens)[tok_index]->tokenType();
          std::string token_val = *(*tokens)[tok_index]->value();
          if (token_type == Instruction)
             offset += 4;
          else if (token_type == String)
             offset += token_val.length() + 1;
-         else if (token_type == LabelRequest && (*target) == token_val)
-            break;
+         else if (token_type == LabelDeclaration) {
+            if (label_positions.find(token_val) == label_positions.end()) {
+               uint16_t position = offset + (uint16_t)os->tellp();
+               label_positions[token_val] = position;
+            }
+         }
       }
-
-      uint16_t position = offset + (uint16_t)os->tellp();
-      label_positions[*target] = position;
-      return position;
+      return -1;
    }
 
    void expect_comma(int * tok_index) {

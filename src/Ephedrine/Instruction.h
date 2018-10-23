@@ -16,6 +16,7 @@ enum InstructionType {
    Add,
    Addi,
    Hcf,
+   Jmp,
    Lb,
    Lbi,
    Li,

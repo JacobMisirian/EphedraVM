@@ -21,9 +21,9 @@ CPU::~CPU() {
 
 void CPU::execute() {
    IP_REGISTER = 0;
-   for (; ; IP_REGISTER += INSTRUCTION_SIZE) {
+   while (true) {
       read_instruction(ram, IP_REGISTER, &opcode, &operand1, &operand2, &immediate);
-      printf("%d\t%d\t%d\t%d\n", opcode, operand1, operand2, immediate);
+      printf("%d\t%d\t%d\t%d\t\t%d\n", opcode, operand1, operand2, immediate, IP_REGISTER);
 
       switch (opcode) {
       case Add:
@@ -36,6 +36,9 @@ void CPU::execute() {
          for (int i = 0; i < 0xF; i++)
             printf("Register %d: %d\n", i, registers[i]);
          return;
+      case Jmp:
+         IP_REGISTER = immediate;
+         continue;
       case Li:
          registers[operand1] = immediate;
          break;
@@ -43,6 +46,7 @@ void CPU::execute() {
          registers[operand1] = registers[operand2];
          break;
       }
+      IP_REGISTER += INSTRUCTION_SIZE;
    }
 
 }

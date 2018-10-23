@@ -1,3 +1,5 @@
+//#define _LEXER_TESTING_
+
 #include "Emit.h"
 #include <fstream>
 #include "Lexer.h"
@@ -5,7 +7,7 @@
 #include "TokenType.h"
 
 int main(int argc, char *argv[]) {
-   const char * code = "li r1, 69 addi r1, 2 mov r3, r1";
+   const char * code = "jmp main jmp end .end hcf .main li r1, 69 addi r1, 2 mov r3, r1 jmp end";
 
    std::vector<Token*> tokens;
    Lexer * l = new Lexer(code, &tokens);

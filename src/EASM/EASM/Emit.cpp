@@ -33,8 +33,9 @@ void Emit::assemble() {
             expect_comma(&tok_index);
             immediate = expect_immediate(&tok_index);
          }
+         else if (token_val == "jmp")
+            immediate = expect_immediate(&tok_index);
          serialize_inst(opcode, operand1, operand2, immediate);
       }
    }
-   serialize_inst(2, 0, 0, 0);
 }
