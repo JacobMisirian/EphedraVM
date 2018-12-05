@@ -10,8 +10,7 @@
 #include "Token.h"
 #include <vector>
 
-class Emit
-{
+class Emit {
 private:
    std::vector<Token*> * tokens;
    std::map<std::string, uint16_t> label_positions;
