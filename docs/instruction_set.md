@@ -5,7 +5,4 @@ can be represented as follows:
 
 |            28 |         22 |         16 |           0 |
 |--------------:|-----------:|-----------:|------------:|
-| <instruction> | <operand1> | <operand2> | <immediate> |
-|               |            |            |             |
-|               |            |            |             |
-  
+| ```<instruction>``` | ```<operand1>``` | ```<operand2>``` | ```<immediate>``` |
