@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define IP_REGISTER registers[get_register(IP)]
-
+#define STACK_REGISTER registers[get_register(SP)]
 
 enum RegisterNames {
    R0,

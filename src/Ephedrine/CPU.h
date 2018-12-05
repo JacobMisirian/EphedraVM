@@ -6,6 +6,10 @@
 #include <stdint.h>
 
 class CPU {
+public:
+   CPU(size_t ram_size, std::ifstream * os);
+   ~CPU();
+   void execute();
 private:
    char * ram;
    int16_t registers[0xF];
@@ -13,10 +17,6 @@ private:
    uint8_t operand1;
    uint8_t operand2;
    int16_t immediate;
-public:
-   CPU(size_t ram_size, std::ifstream * os);
-   ~CPU();
-   void execute();
 };
 
 #endif
