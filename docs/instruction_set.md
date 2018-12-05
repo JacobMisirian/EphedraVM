@@ -14,7 +14,7 @@ can be represented as follows:
 | ```r1 = r1 + r2;```                     | add         | r1       | r2       |           |
 | ```r1 = r1 + i;```                      | add         | r1       |          | i         |
 | ```debug_print(); return 0;```          | hcf         |          |          |           |
-| ```goto lbl;```                         | jmp         |          |          | i         |
+| ```goto lbl;```                         | jmp         |          |          | lbl       |
 | ```r1 = (uint8_t)*r2;```                | lb          | r1       | r2       |           |
 | ```r1 = (uint8_t)*i;```                 | lb          | r1       |          | i         |
 | ```r1 = i;```                           | li          | r1       |          | i         |
