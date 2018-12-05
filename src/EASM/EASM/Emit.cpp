@@ -21,10 +21,10 @@ void Emit::assemble() {
          uint8_t opcode = get_instruction_code(&token_val);
          uint8_t operand1 = 0, operand2 = 0;
          uint16_t immediate = 0;
-
          // <op> <r1>, [<r2>/<int>/<lbl>]
          if (token_val == "add" || token_val == "lb" || token_val == "lw" ||
             token_val == "sb" || token_val == "sw" || token_val == "sub") {
+            opcode = get_instruction_code(&(token_val += "i"));
             operand1 = expect_register(&tok_index);
             expect_comma(&tok_index);
             if ((*tokens)[tok_index + 1]->tokenType() == Register)
@@ -33,7 +33,7 @@ void Emit::assemble() {
                immediate = expect_immediate(&tok_index);
          }
          // <op> <r1>, [<int>/<lbl>]
-         else if (token_val == "jmp" || token_val == "li") {
+         else if (token_val == "li") {
             operand1 = expect_register(&tok_index);
             expect_comma(&tok_index);
             immediate = expect_immediate(&tok_index);
@@ -47,6 +47,9 @@ void Emit::assemble() {
          // <op> <r1>
          else if (token_val == "pop" || token_val == "push")
             operand1 = expect_register(&tok_index);
+         // <op> [<int>/<lbl>]
+         else if (token_val == "jmp")
+            immediate = expect_immediate(&tok_index);
          
          serialize_inst(opcode, operand1, operand2, immediate);
       }

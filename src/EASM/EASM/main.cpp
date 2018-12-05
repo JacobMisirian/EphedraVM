@@ -7,7 +7,7 @@
 #include "TokenType.h"
 
 int main(int argc, char *argv[]) {
-   const char * code = "jmp main jmp end .end hcf .main li r1, 69 addi r1, 2 mov r3, r1 jmp end";
+   const char * code = "jmp main jmp end .end hcf .main li r1, 69 add r1, 2 mov r3, r1 jmp end";
 
    std::vector<Token*> tokens;
    Lexer * l = new Lexer(code, &tokens);
