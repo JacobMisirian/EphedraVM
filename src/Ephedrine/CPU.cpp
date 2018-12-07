@@ -1,18 +1,14 @@
 #include "CPU.h"
 #include "Instruction.h"
 #include "Register.h"
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
-#include <stdint.h>
 
-CPU::CPU(size_t ram_size, std::ifstream * os) {
-   ram = (char *) malloc(ram_size);
-   
-   os->seekg(0, std::ios::end);
-   size_t os_size = (size_t)os->tellg();
-   os->seekg(0, std::ios::beg);
-   os->read(ram, os_size);
+CPU::CPU(size_t ram_size, FILE * os) {
+   ram = (char*)malloc(ram_size);
+   fseek(os, 0, SEEK_END);
+   int os_length = ftell(os);
+   printf("OS Length is %d\n", os_length);
+   rewind(os);
+   fread(os, os_length, 1, os);
 }
 
 CPU::~CPU() {
@@ -20,10 +16,22 @@ CPU::~CPU() {
 }
 
 void CPU::execute() {
+   STACK_REGISTER = 1000;
    IP_REGISTER = 0;
+
+   uint8_t opcode, operand1, operand2;
+   uint16_t immediate;
+   uint32_t inst;
+
    while (true) {
-      read_instruction(ram, IP_REGISTER, &opcode, &operand1, &operand2, &immediate);
-      printf("%d\t%d\t%d\t%d\t\t%d\n", opcode, operand1, operand2, immediate, IP_REGISTER);
+      inst = *(uint32_t*)(ram);
+      printf("INST %u\n", inst);
+      opcode = (uint8_t)(inst >> 28);
+      operand1 = (uint8_t)((inst >> 16) & 63);
+      operand2 = (uint8_t)((inst >> 22) & 63);
+      immediate = (uint16_t)(inst & 0x00FF);
+
+      printf("Code: %d Op1: %d Op2: %d Imm: %d\n", opcode, operand1, operand2, immediate);
 
       switch (opcode) {
       case Add:
@@ -84,7 +92,7 @@ void CPU::execute() {
          registers[operand1] -= immediate;
          break;
       }
+
       IP_REGISTER += INSTRUCTION_SIZE;
    }
-
 }

@@ -1,11 +1,12 @@
 #include "CPU.h"
-#include <fstream>
+
+#include <stdio.h>
+
 
 int main(int argc, char *argv[]) {
-   std::ifstream os;
-   os.open(argv[1], std::ios::in | std::ios::binary | std::ios::ate);
-   CPU * cpu = new CPU(0xFFF, &os);
+   FILE * os = fopen(argv[1], "rb");
+   CPU * cpu = new CPU(0xFFFF, os);
    cpu->execute();
-   os.close();
+   fclose(os);
    delete cpu;
 }

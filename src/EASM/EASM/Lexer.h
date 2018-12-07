@@ -1,6 +1,7 @@
 #ifndef _LEXER_H_
 #define _LEXER_H_
 
+#include <fstream>
 #include "InstructionInfo.h"
 #include <iostream>
 #include <map>
@@ -14,14 +15,14 @@ private:
    std::vector<Token*> * tokens;
    int pos;
    int len;
-   const char * source;
+   std::ifstream * source;
 
-   int read_char() {
-      return pos < len ? source[pos++] : -1;
+   int8_t read_char() {
+      return source->get();
    }
 
-   int peek_char() {
-      return pos < len ? source[pos] : -1;
+   int8_t peek_char() {
+      return source->peek();
    }
 
    void whitespace() {
@@ -82,7 +83,7 @@ private:
       tokens->push_back(new Token(str, String));
    }
 public:
-   Lexer(const char * code, std::vector<Token*> * tokens);
+   Lexer(std::ifstream * src, std::vector<Token*> * tokes);
    ~Lexer();
    void scan();
 };

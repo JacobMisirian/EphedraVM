@@ -1,10 +1,9 @@
 #include "Lexer.h"
 
-Lexer::Lexer(const char * code, std::vector<Token*> * tokes) {
+Lexer::Lexer(std::ifstream * src, std::vector<Token*> * tokes) {
    tokens = tokes;
    pos = 0;
-   len = strlen(code);
-   source = code;
+   source = src;
 }
 
 
@@ -12,6 +11,7 @@ Lexer::~Lexer() {
     for (int i = 0; i < tokens->size(); i++) {
        delete (*tokens)[i];
     }
+    delete source;
 }
 
 void Lexer::scan() {

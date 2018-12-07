@@ -3,14 +3,16 @@
 #include "Emit.h"
 #include <fstream>
 #include "Lexer.h"
+#include <sstream>
 #include <string>
 #include "TokenType.h"
 
-int main(int argc, char *argv[]) {
-   const char * code = "jmp main jmp end .end hcf .main li r1, 69 add r1, 2 mov r3, r1 jmp end";
+const char * code;
 
+int main(int argc, char *argv[]) {
+   std::ifstream * is = new std::ifstream(argv[1], std::ios::in);
    std::vector<Token*> tokens;
-   Lexer * l = new Lexer(code, &tokens);
+   Lexer * l = new Lexer(is, &tokens);
    l->scan();
 
 #ifdef _LEXER_TESTING_
@@ -21,7 +23,7 @@ int main(int argc, char *argv[]) {
 #endif
 
    std::ofstream os;
-   os.open(argv[1], std::ios::out | std::ios::binary | std::ios::ate);
+   os.open(argv[2], std::ios::out | std::ios::binary | std::ios::ate);
    Emit * emit = new Emit(&tokens, &os);
    emit->assemble();
    os.close();

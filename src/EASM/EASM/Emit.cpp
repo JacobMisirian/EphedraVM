@@ -23,14 +23,16 @@ void Emit::assemble() {
          uint16_t immediate = 0;
          // <op> <r1>, [<r2>/<int>/<lbl>]
          if (token_val == "add" || token_val == "lb" || token_val == "lw" ||
-            token_val == "sb" || token_val == "sw" || token_val == "sub") {
-            opcode = get_instruction_code(&(token_val += "i"));
+            token_val == "mod" || token_val == "sb" || token_val == "sw" ||
+            token_val == "sub") {
             operand1 = expect_register(&tok_index);
             expect_comma(&tok_index);
             if ((*tokens)[tok_index + 1]->tokenType() == Register)
                operand2 = expect_register(&tok_index);
-            else
+            else {
+               opcode = get_instruction_code(&(token_val += "i"));
                immediate = expect_immediate(&tok_index);
+            }
          }
          // <op> <r1>, [<int>/<lbl>]
          else if (token_val == "li") {
