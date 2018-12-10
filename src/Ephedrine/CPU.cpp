@@ -6,9 +6,8 @@ CPU::CPU(size_t ram_size, FILE * os) {
    ram = (char*)malloc(ram_size);
    fseek(os, 0, SEEK_END);
    int os_length = ftell(os);
-   printf("OS Length is %d\n", os_length);
    rewind(os);
-   fread(os, os_length, 1, os);
+   fread(ram, os_length, 1, os);
 }
 
 CPU::~CPU() {
@@ -24,8 +23,7 @@ void CPU::execute() {
    uint32_t inst;
 
    while (true) {
-      inst = *(uint32_t*)(ram);
-      printf("INST %u\n", inst);
+      inst = *(uint32_t*)(ram + IP_REGISTER);
       opcode = (uint8_t)(inst >> 28);
       operand1 = (uint8_t)((inst >> 16) & 63);
       operand2 = (uint8_t)((inst >> 22) & 63);
@@ -71,7 +69,7 @@ void CPU::execute() {
          break;
       case Push:
          STACK_REGISTER -= 2;
-         *((uint16_t*)ram[STACK_REGISTER]) = registers[operand1];
+         *((uint16_t*)(ram + STACK_REGISTER)) = registers[operand1];
          break;
       case Sb:
          ram[registers[operand1]] = registers[operand2];
@@ -80,10 +78,10 @@ void CPU::execute() {
          ram[registers[operand1]] = immediate;
          break;
       case Sw:
-         *((uint16_t*)ram[registers[operand1]]) = registers[operand2];
+         *((uint16_t*)(ram + registers[operand1])) = registers[operand2];
          break;
       case Swi:
-         *((uint16_t*)ram[registers[operand1]]) = immediate;
+         *((uint16_t*)(ram + registers[operand1])) = immediate;
          break;
       case Sub:
          registers[operand1] -= registers[operand2];
