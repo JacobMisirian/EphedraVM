@@ -72,6 +72,7 @@ void TextScreen::run() {
 #endif
 #ifdef _OS_LINUX_
                printf("\033[%d;%dH%c", row, col, real_c);
+               fflush(stdout);
 #endif
             }
          }

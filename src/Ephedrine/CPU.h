@@ -10,8 +10,8 @@
 #include "TextScreen.h"
 #include <vector>
 
-#define _OS_WINDOWS_
-// #define _OS_LINUX_
+//#define _OS_WINDOWS_
+ #define _OS_LINUX_
 
 class CPU {
 public:
