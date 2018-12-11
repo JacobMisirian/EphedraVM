@@ -6,6 +6,7 @@ Emit::Emit(std::vector<Token*> * tokens, std::ofstream * os) {
 }
 
 Emit::~Emit() {
+
 }
 
 void Emit::assemble() {

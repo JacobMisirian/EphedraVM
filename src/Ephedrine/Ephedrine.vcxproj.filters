@@ -24,12 +24,21 @@
     <ClInclude Include="Instruction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

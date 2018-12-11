@@ -1,20 +1,21 @@
 #include "CPU.h"
-#include "Instruction.h"
-#include "Register.h"
 
 CPU::CPU(size_t ram_size, FILE * os) {
-   ram = (char*)malloc(ram_size);
+   ram = (char*)calloc(1, ram_size);
    fseek(os, 0, SEEK_END);
    int os_length = ftell(os);
    rewind(os);
    fread(ram, os_length, 1, os);
+   devices = new std::vector<Device*>();
 }
 
 CPU::~CPU() {
+   delete devices;
    delete ram;
 }
 
 void CPU::execute() {
+   CPU::start_devices();
    STACK_REGISTER = 1000;
    IP_REGISTER = 0;
 
@@ -27,9 +28,9 @@ void CPU::execute() {
       opcode = (uint8_t)(inst >> 28);
       operand1 = (uint8_t)((inst >> 16) & 63);
       operand2 = (uint8_t)((inst >> 22) & 63);
-      immediate = (uint16_t)(inst & 0x00FF);
-
+      immediate = (uint16_t)(inst & 0xFF);
       printf("Code: %d Op1: %d Op2: %d Imm: %d\n", opcode, operand1, operand2, immediate);
+      printf("Inst: %u\n", inst);
 
       switch (opcode) {
       case Add:
@@ -39,8 +40,10 @@ void CPU::execute() {
          registers[operand1] += immediate;
          break;
       case Hcf:
-         for (int i = 0; i < 0xF; i++)
-            printf("Register %d: %d\n", i, registers[i]);
+         stop_devices();
+         //for (int i = 0; i < 0xF; i++)
+           // printf("Register %d: %d\n", i, registers[i]);
+         while (true);
          return;
       case Jmp:
          IP_REGISTER = immediate;
@@ -72,10 +75,10 @@ void CPU::execute() {
          *((uint16_t*)(ram + STACK_REGISTER)) = registers[operand1];
          break;
       case Sb:
-         ram[registers[operand1]] = registers[operand2];
+         ram[registers[operand1]] = (uint8_t)registers[operand2];
          break;
       case Sbi:
-         ram[registers[operand1]] = immediate;
+         ram[registers[operand1]] = (uint8_t)immediate;
          break;
       case Sw:
          *((uint16_t*)(ram + registers[operand1])) = registers[operand2];
@@ -92,5 +95,19 @@ void CPU::execute() {
       }
 
       IP_REGISTER += INSTRUCTION_SIZE;
+   }
+}
+
+void CPU::start_devices() {
+   std::vector<Device*>::iterator iter;
+   for (iter = devices->begin(); iter != devices->end(); iter++) {
+      (*iter)->power_on();
+   }
+}
+
+void CPU::stop_devices() {
+   std::vector<Device*>::iterator iter;
+   for (iter = devices->begin(); iter != devices->end(); iter++) {
+      (*iter)->power_off();
    }
 }

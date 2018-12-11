@@ -118,12 +118,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CPU.h" />
+    <ClInclude Include="Device.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="Register.h" />
+    <ClInclude Include="TextScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TextScreen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
