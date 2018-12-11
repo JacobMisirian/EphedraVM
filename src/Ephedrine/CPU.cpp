@@ -41,8 +41,8 @@ void CPU::execute() {
          break;
       case Hcf:
          stop_devices();
-         //for (int i = 0; i < 0xF; i++)
-           // printf("Register %d: %d\n", i, registers[i]);
+         for (int i = 0; i < 0xF; i++)
+            printf("Register %d: %d\n", i, registers[i]);
          while (true);
          return;
       case Jmp:
@@ -73,6 +73,10 @@ void CPU::execute() {
       case Push:
          STACK_REGISTER -= 2;
          *((uint16_t*)(ram + STACK_REGISTER)) = registers[operand1];
+         break;
+      case Pushi:
+         STACK_REGISTER -= 2;
+         *((uint16_t*)(ram + STACK_REGISTER)) = immediate;
          break;
       case Sb:
          ram[registers[operand1]] = (uint8_t)registers[operand2];

@@ -27,6 +27,7 @@ enum InstructionType {
    Mov,
    Pop,
    Push,
+   Pushi,
    Sb,
    Sbi,
    Sw,
